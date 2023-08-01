@@ -80,12 +80,15 @@ Item {
     property int turnSignal: gear == "P" && !start ? randomDirection() : -1
     property real temperature: 0.6
     property bool start: true
-    property real target: 0
+    property real targeSpeed: 0
 
     MyInterface {
         id: myInterface
         Component.onCompleted: myInterface.setSpeed(0);
-        onSpeedChanged: valueSource.kph = myInterface.speed; // Update kph property when speed changes
+        onSpeedChanged: {
+            valueSource.kph = myInterface.speed // Update kph property when speed changes
+            //valueSource.targeSpeed = myInterface.speed;
+        }
     }
 
     function randomDirection() {
@@ -99,6 +102,7 @@ Item {
             target: valueSource
             property: "kph"
             easing.type: Easing.Linear
+            //to: valueSource.targetSpeed
             duration: 600
         }
     }
