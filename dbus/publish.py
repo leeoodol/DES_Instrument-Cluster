@@ -33,14 +33,14 @@ class dbusService:
         return speed
 
     def getDistance(self) -> float:
-        msg = self.can.recv(10.0);
+        msg = self.can.recv();
         if msg is None:
             return "No message recieved"
         distance = msg.data[2] + msg.data[3]*256
         return distance
 
     def getSpeed(self) -> float:
-        msg = self.can.recv(10.0);
+        msg = self.can.recv();
         if msg is None:
             return "No message recieved"
         rpm = msg.data[0] + msg.data[1]*256

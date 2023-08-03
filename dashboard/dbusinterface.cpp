@@ -2,7 +2,7 @@
 
 DBusInterface::DBusInterface(QObject *parent) :
     QObject(parent),
-    m_speed(100)
+    m_speed(10)
 {
     m_interface = new QDBusInterface("com.example.dbusService",
                                      "/com/example/dbusService",
