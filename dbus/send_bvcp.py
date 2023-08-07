@@ -22,13 +22,12 @@ class dbusService:
     """
     def __init__(self):
         piracer = PiRacerStandard()
-        self.voltage = piracer.get_battery_voltage()
-        self.current = piracer.get_battery_current()
-
-        self.volt = '{0:0>6.3f}'.format(self.voltage)
 
     def vol(self) -> str:
-        return self.volt
+        piracer = PiRacerStandard()
+        voltage = piracer.get_battery_voltage()
+        volt = '{0:0>6.3f}'.format(voltage)
+        return volt
     def cur(self) -> str:
         return self.current
             
