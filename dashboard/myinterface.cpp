@@ -31,7 +31,7 @@ void MyInterface::setSpeed(qreal speed)
 void MyInterface::fetchSpeed()
 {
     // call the method and get the reply
-    QDBusMessage reply = m_interface->call("getDis");
+    QDBusMessage reply = m_interface->call("vol");
 
     // check if the call was successful
     if(reply.type() == QDBusMessage::ErrorMessage) {
