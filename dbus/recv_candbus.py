@@ -8,4 +8,4 @@ remote_object = bus.get('com.example.dbusService',"/com/example/dbusService")
 
 
 while(1):
-    print(remote_object.getDistance())
+    print(remote_object.vol())

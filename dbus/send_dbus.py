@@ -17,7 +17,7 @@ class dbusService:
     """
     def __init__(self):
     	self.value = 100
-
+    
     def vol(self) -> int:
         self.value += 1
         return self.value

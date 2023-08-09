@@ -1,5 +1,6 @@
 # Copyright (C) 2022 twyleg
 import time
+import math
 from piracer.vehicles import PiRacerStandard
 from pydbus import SessionBus
 from gi.repository import GLib
@@ -20,15 +21,20 @@ class dbusService:
         </interface>
     </node>
     """
-    def __init__(self):
-        piracer = PiRacerStandard()
 
-    def vol(self) -> str:
-        piracer = PiRacerStandard()
-        voltage = piracer.get_battery_voltage()
-        volt = '{0:0>6.3f}'.format(voltage)
+    def __init__(self)->str:
+        self.piracer = PiRacerStandard()
+        self.voltage =0
+        
+
+    def vol(self)->str:    
+        self.piracer = PiRacerStandard()
+        self.voltage = self.piracer.get_battery_voltage()
+        self.voltage = 49.76*math.sin(1.546*self.voltage + 1.001) + 48.31
+        volt = '{0:0>6.3f}'.format(self.voltage)
         return volt
-    def cur(self) -> str:
+
+    def cur(self):
         return self.current
             
 
