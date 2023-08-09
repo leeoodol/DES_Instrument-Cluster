@@ -13,7 +13,7 @@ class dbusService:
     <node>
         <interface name='com.example.dbusService'>
             <method name='vol'>
-                <arg type='s' name='voltage' direction='out'/>
+                <arg type='d' name='voltage' direction='out'/>
             </method>
             <method name='cur'>
                 <arg type='s' name='current' direction='out'/>
@@ -27,12 +27,12 @@ class dbusService:
         self.voltage =0
         
 
-    def vol(self)->str:    
+    def vol(self)->float:    
         self.piracer = PiRacerStandard()
         self.voltage = self.piracer.get_battery_voltage()
         self.voltage = 49.76*math.sin(1.546*self.voltage + 1.001) + 48.31
-        volt = '{0:0>6.3f}'.format(self.voltage)
-        return volt
+        #volt = '{0:0>6.3f}'.format(self.voltage)
+        return self.voltage
 
     def cur(self):
         return self.current
