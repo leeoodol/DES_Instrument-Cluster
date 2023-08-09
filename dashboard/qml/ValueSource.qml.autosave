@@ -84,13 +84,11 @@ Item {
 
     MyInterface {
         id: myInterface
-        Component.onCompleted: myInterface.setSpeed(0),myInterface.setFuel(0);
+        Component.onCompleted: myInterface.setSpeed(0);
         onSpeedChanged: {
             valueSource.kph = myInterface.speed // Update kph property when speed changes
             //valueSource.targeSpeed = myInterface.speed;
-        }
-        onFuelChanged: {
-            valueSource.fuel = myInterface.fuel;
+            valueSource.fuel = myInterface.speed/200;
         }
     }
 
