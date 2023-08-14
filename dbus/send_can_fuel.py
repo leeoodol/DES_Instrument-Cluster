@@ -20,7 +20,10 @@ class dbusService:
                 <arg type='d' name='voltage' direction='out'/>
             </method>
             <method name='get_rpm'>
-                <arg type='i' name='current' direction='out'/>
+                <arg type='i' name='rpm' direction='out'/>
+            </method>
+            <method name='get_dis'>
+                <arg type='i' name='distance' direction='out'/>
             </method>
         </interface>
     </node>
@@ -44,8 +47,15 @@ class dbusService:
         msg = self.can.recv();
         if msg is None:
             return "No message recieved"
+        rpm = msg.data[0] + msg.data[1]*256
+        return rpm   
+
+    def get_dis(self) -> int:
+        msg = self.can.recv();
+        if msg is None:
+            return "No message recieved"
         distance = msg.data[2] + msg.data[3]*256
-        return distance            
+        return distance         
 
 bus = SessionBus()
 bus.publish("com.example.dbusService", dbusService())

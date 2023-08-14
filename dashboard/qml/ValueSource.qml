@@ -54,8 +54,9 @@ import com.example 1.0
 Item {
     id: valueSource
     property real kph: 0
-    property real rpm: 1
+    property real rpm: 0.1
     property real fuel: 0.85
+    property real dis: 100
     property string gear: {
         var g;
         if (kph == 0) {
@@ -88,9 +89,13 @@ Item {
         onSpeedChanged: {
             valueSource.kph = myInterface.speed // Update kph property when speed changes
             //valueSource.targeSpeed = myInterface.speed;
+            valueSource.rpm = myInterface.speed/35
         }
         onFuelChanged: {
             valueSource.fuel = myInterface.fuel;
+        }
+        onDisChanged: {
+            valueSource.dis = myInterface.dis;
         }
     }
 

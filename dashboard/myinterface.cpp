@@ -4,7 +4,8 @@ MyInterface::MyInterface(QObject *parent) :
     QObject(parent),
     m_bus(QDBusConnection::sessionBus()),
     m_speed(0.0),
-    m_fuel(0.0)
+    m_fuel(0.0),
+    m_dis(0.0)
 {
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MyInterface::fetchSpeed);
@@ -40,11 +41,23 @@ void MyInterface::setFuel(qreal fuel)
     emit fuelChanged(fuel);
 }
 
+void MyInterface::setDis(qreal dis)
+{
+    // Add any additional logic you may need here.
+    // For this example, we'll emit a signal to notify the speed change.
+    if (m_dis == dis)
+        return;
+
+    m_dis = dis;
+    emit disChanged(dis);
+}
+
 void MyInterface::fetchSpeed()
 {
     // call the method and get the reply
     QDBusMessage reply = m_interface->call("get_rpm");
     QDBusMessage reply2 = m_interface->call("get_fuel");
+    QDBusMessage reply3 = m_interface->call("get_dis");
 
     // check if the call was successful
     if(reply.type() == QDBusMessage::ErrorMessage) {
@@ -55,16 +68,17 @@ void MyInterface::fetchSpeed()
     // get the return value
     QString message = reply.arguments().at(0).toString();
     QString message2 = reply2.arguments().at(0).toString();
+    QString message3 = reply3.arguments().at(0).toString();
     qreal newSpeed = message.toDouble();
     qreal newFuel = message2.toDouble();
+    qreal newDis = message3.toDouble();
     qDebug() << "speed: " << newSpeed;
+    qDebug() << "rpm: " << newSpeed/35;
     setSpeed(newSpeed);
     qDebug() << "fuel: " << newFuel;
+    qDebug() << "Distance: " << newDis;
     setFuel(newFuel);
-//    if (m_speed >= 200)
-//        setSpeed(10);
-//    else
-//        setSpeed(m_speed + 10);
+    setDis(newDis);
 }
 
 qreal MyInterface::getSpeed() const
@@ -75,4 +89,9 @@ qreal MyInterface::getSpeed() const
 qreal MyInterface::getFuel() const
 {
     return m_fuel;
+}
+
+qreal MyInterface::getDis() const
+{
+    return m_dis;
 }

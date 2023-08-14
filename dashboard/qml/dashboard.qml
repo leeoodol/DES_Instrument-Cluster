@@ -57,8 +57,8 @@ import QtQuick.Extras 1.4
 Window {
     id: root
     visible: true
-    width: 1024
-    height: 600
+    width: 400
+    height: 1280
 
     color: "#161616"
     title: "Qt Quick Extras Demo"
@@ -75,33 +75,35 @@ Window {
         height: Math.min(root.width, root.height)
         anchors.centerIn: parent
 
-        Row {
+        Column {
             id: gaugeRow
             spacing: container.width * 0.02
             anchors.centerIn: parent
 
-            TurnIndicator {
-                id: leftIndicator
-                anchors.verticalCenter: parent.verticalCenter
-                width: height
-                height: container.height * 0.1 - gaugeRow.spacing
+//            TurnIndicator {
+//                id: leftIndicator
+//                anchors.verticalCenter: parent.verticalCenter
+//                width: height
+//                height: container.height * 0.1 - gaugeRow.spacing
 
-                direction: Qt.LeftArrow
-                on: valueSource.turnSignal == Qt.LeftArrow
-            }
+//                direction: Qt.LeftArrow
+//                on: valueSource.turnSignal == Qt.LeftArrow
+//            }
 
             Item {
                 width: height
                 height: container.height * 0.25 - gaugeRow.spacing
-                anchors.verticalCenter: parent.verticalCenter
+                //anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
 
                 CircularGauge {
                     id: fuelGauge
                     value: valueSource.fuel
                     maximumValue: 1
-                    y: parent.height / 2 - height / 2 - container.height * 0.01
-                    width: parent.width
-                    height: parent.height * 0.7
+                    y: parent.height / 2 - height*1.8 - container.height * 0.01
+                    x: -parent.height/4
+                    width: parent.width*1.6
+                    height: parent.height*1.6
 
                     style: IconGaugeStyle {
                         id: fuelGaugeStyle
@@ -119,23 +121,25 @@ Window {
                 }
 
                 CircularGauge {
-                    value: valueSource.temperature
-                    maximumValue: 1
-                    width: parent.width
-                    height: parent.height * 0.7
-                    y: parent.height / 2 + container.height * 0.01
+                    id: disGauge
+                    value: valueSource.dis
+                    maximumValue: 50
+                    y: parent.height / 2 - height*3 - container.height * 0.01
+                    x: -parent.height/4
+                    width: parent.width*1.6
+                    height: parent.height*1.6
 
                     style: IconGaugeStyle {
-                        id: tempGaugeStyle
+                        id: disGaugeStyle
 
-                        icon: "qrc:/images/temperature-icon.png"
-                        maxWarningColor: Qt.rgba(0.5, 0, 0, 1)
+                        icon: "qrc:/images/parking-sensor.png"
+                        minWarningColor: Qt.rgba(1, 0, 0, 100)
 
                         tickmarkLabel: Text {
                             color: "white"
-                            visible: styleData.value === 0 || styleData.value === 1
-                            font.pixelSize: tempGaugeStyle.toPixels(0.225)
-                            text: styleData.value === 0 ? "C" : (styleData.value === 1 ? "H" : "")
+                            visible: styleData.value === 0 || styleData.value === 50
+                            font.pixelSize: disGaugeStyle.toPixels(0.225)
+                            text: styleData.value === 0 ? "0" : (styleData.value === 50 ? "50" : "")
                         }
                     }
                 }
@@ -145,6 +149,7 @@ Window {
                 id: speedometer
                 value: valueSource.kph
                 anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
                 maximumValue: 280
                 // We set the width to the height, because the height will always be
                 // the more limited factor. Also, all circular controls letterbox
@@ -161,23 +166,24 @@ Window {
             CircularGauge {
                 id: tachometer
                 width: height
-                height: container.height * 0.25 - gaugeRow.spacing
+                height: container.height * 0.4 - gaugeRow.spacing
                 value: valueSource.rpm
+                y: parent.height + height*0.8 - container.height * 0.01
                 maximumValue: 8
-                anchors.verticalCenter: parent.verticalCenter
-
+                //anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
                 style: TachometerStyle {}
             }
 
-            TurnIndicator {
-                id: rightIndicator
-                anchors.verticalCenter: parent.verticalCenter
-                width: height
-                height: container.height * 0.1 - gaugeRow.spacing
+//            TurnIndicator {
+//                id: rightIndicator
+//                anchors.verticalCenter: parent.verticalCenter
+//                width: height
+//                height: container.height * 0.1 - gaugeRow.spacing
 
-                direction: Qt.RightArrow
-                on: valueSource.turnSignal == Qt.RightArrow
-            }
+//                direction: Qt.RightArrow
+//                on: valueSource.turnSignal == Qt.RightArrow
+//            }
 
         }
     }

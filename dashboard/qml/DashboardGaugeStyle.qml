@@ -136,6 +136,30 @@ CircularGaugeStyle {
             anchors.top: speedText.bottom
             anchors.horizontalCenter: parent.horizontalCenter
         }
+        Text {
+            id: disText
+            font.pixelSize: toPixels(0.22)
+            text: disInt
+            color: "white"
+            horizontalAlignment: Text.AlignRight
+            //anchors.horizontalCenter: parent.horizontalCenter
+            //anchors.top: parent.verticalCenter
+            y: -parent.height - height*2.28 - container.height * 0.01
+            x: parent.height/2.24
+            anchors.topMargin: toPixels(0.1)
+
+            readonly property int disInt: valueSource.dis
+        }
+        Text {
+            text: "Distance"
+            color: "white"
+            font.pixelSize: toPixels(0.09)
+            //anchors.top: disText.bottom
+            //anchors.horizontalCenter: parent.horizontalCenter
+            y: -parent.height - height*3 - container.height * 0.01
+            x: parent.height/2.4
+        }
+
     }
 
     needle: Canvas {
